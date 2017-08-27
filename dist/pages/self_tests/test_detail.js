@@ -66,6 +66,73 @@ Page({
       })
   },
 
+  publishTest: function() {
+      console.log('publish');
+      var that = this;
+      wx.request({ // 发送请求 获取 jwts
+          url: config.host + '/v1/self/tests/' + that.data.test_id,
+          header: {
+              Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+          },
+          method: "PUT",
+          data: {status: 'published'},
+          success: function (res) {
+              console.log(res.data)
+              if (res.statusCode === 200) {
+                  that.setData({
+                      test: res.data
+                  })
+              } else {
+                  // 提示错误信息
+                  wx.showToast({
+                      title: res.data.text,
+                      icon: 'success',
+                      duration: 2000
+                  });
+              }
+          },
+          fail: function (res) {
+              console.log('发布测试失败');
+          }
+      })
+  },
+  updateTest: function () {
+      console.log('update');
+      var that = this;
+      wx.redirectTo({
+          url: '/pages/tests/update?test_id=' + that.data.test_id + '&title=' + that.data.test_title,
+      });
+  },
+  deleteTest: function () {
+      console.log('delete');
+      var that = this;
+      wx.request({ // 发送请求 获取 jwts
+          url: config.host + '/v1/self/tests/' + that.data.test_id,
+          header: {
+              Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+          },
+          method: "DELETE",
+          success: function (res) {
+              console.log(res.data)
+              if (res.statusCode === 204) {
+                  wx.redirectTo({
+                        url: '/pages/self_tests/list',
+                    });
+              } else {
+                  // 提示错误信息
+                  wx.showToast({
+                      title: res.data.text,
+                      icon: 'success',
+                      duration: 2000
+                  });
+              }
+          },
+          fail: function (res) {
+              console.log('删除失败');
+          }
+      })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

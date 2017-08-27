@@ -13,7 +13,7 @@
             <view class="weui-panel weui-panel_access">
             <view class="weui-tab__panel">
                 <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
-                <navigator  wx:for="{{published_tests}}" wx:key="title" url="/pages/test_preview/test_preview?title={{item.title}}&test_id={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                <navigator  wx:for="{{published_tests}}" wx:key="id" url="/pages/self_tests/test_detail?title={{item.title}}&test_id={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                 <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <image class="weui-media-box__thumb" src="{{item.image}}"/>
                 </view>
@@ -24,7 +24,7 @@
                 </navigator>
                 </view>
                 <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
-                <navigator  wx:for="{{draft_tests}}" wx:key="title" url="/pages/self_tests/test_detail?title={{item.title}}&test_id={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                <navigator  wx:for="{{draft_tests}}" wx:key="id" url="/pages/self_tests/test_detail?title={{item.title}}&test_id={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                 <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <image class="weui-media-box__thumb" src="{{item.image}}"/>
                 </view>

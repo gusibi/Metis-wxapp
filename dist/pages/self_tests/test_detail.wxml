@@ -1,37 +1,23 @@
 <!--test_detail.wxml-->
 <view class="page">
-    <view class="page__hd">
-        <view class="page__title">{{test.title}}</view>
-        <view class="page__desc">{{test.description}}</view>
-    </view>
-    <view class="page__bd">
-        <view class="weui-article">
-            <view class="weui-article__h1">大标题</view>
-            <view class="weui-article__section">
-                <view class="weui-article__title">章标题</view>
-                <view class="weui-article__section">
-                    <view class="weui-article__h3">1.1 节标题</view>
-                    <view class="weui-article__p">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat.
-                    </view>
-                    <view class="weui-article__p">
-                        <image class="weui-article__img" src="../images/pic_article.png" mode="aspectFit" style="height: 180px" />
-                        <image class="weui-article__img" src="../images/pic_article.png" mode="aspectFit" style="height: 180px" />
-                    </view>
-                </view>
-                <view class="weui-article__section">
-                    <view class="weui-article__h3">1.2 节标题</view>
-                    <view class="weui-article__p">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </view>
-                </view>
-            </view>
+<view class="card">
+    <image class="card-img-top" src="{{test.image}}"/>
+    <view class="card-block">
+    <view class="card-body">
+        <view class="card-title">{{test.title}}</view>
+        <view class="card-text">{{test.description}}</view>
+        <view class="card-text">
+        <text class="text-muted">开始时间：{{test.start_time}}</text>
+        </view>
+        <view class="card-text">
+        <text class="text-muted">截止时间：{{test.end_time}}</text>
+        </view>
         </view>
     </view>
+    </view>
+    <view class="button-sp-area">
+        <button class="weui-btn" type="primary" wx:if="{{test.status == 'draft'}}" bindtap="publishTest" >发布</button>
+        <button class="weui-btn" type="default" bindtap="updateTest">修改</button>
+        <button class="weui-btn" type="warn" type="warn" bindtap="deleteTest" >删除</button>
+        </view>
 </view>

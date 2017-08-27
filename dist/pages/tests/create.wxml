@@ -52,33 +52,18 @@
 
             <view class="weui-cells__title">测试时间</view>
             <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell weui-cell_input">
+                <view class="weui-cell weui-cell_input" wx:for="{{time_pickers}}" wx:key="lable">
                     <view class="weui-cell__hd">
-                        <view class="weui-label">开始时间</view>
+                        <view class="weui-label">{{item.lable}}</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <picker mode="date" name="start_date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindStartDateChange">
-                            <view class="weui-input">{{start_date}}</view>
+                        <picker mode="date" name="{{item.date_name}}" value="{{item.start_date}}" start="{{item.start_date}}" end="{{item.end_date}}" bindchange="bindStartDateChange">
+                            <view class="weui-input">{{item.start_date}}</view>
                         </picker>
                     </view>
                     <view class="weui-cell__bd">
-                        <picker mode="time" name="start_time" value="{{time}}" start="09:01" end="21:01" bindchange="bindStartTimeChange">
-                            <view class="weui-input">{{start_time}}</view>
-                        </picker>
-                    </view>
-                </view>
-                <view class="weui-cell weui-cell_input">
-                    <view class="weui-cell__hd">
-                        <view class="weui-label">结束时间</view>
-                    </view>
-                    <view class="weui-cell__bd">
-                        <picker mode="date" name="end_date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindEndDateChange">
-                            <view class="weui-input">{{end_date}}</view>
-                        </picker>
-                    </view>
-                    <view class="weui-cell__bd">
-                        <picker mode="time" name="end_time" value="{{time}}" start="09:01" end="21:01" bindchange="bindEndTimeChange">
-                            <view class="weui-input">{{end_time}}</view>
+                        <picker mode="time" name="{{item.time_name}}" value="{{item.end_time}}" start="{{item.start_time}}" end="{{item.end_time}}" bindchange="bindStartTimeChange">
+                            <view class="weui-input">{{item.start_time}}</view>
                         </picker>
                     </view>
                 </view>

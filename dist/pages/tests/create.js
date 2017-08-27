@@ -17,7 +17,27 @@ Page({
         test_image: '',
         upload_fail: false,
         upload_progress: 0,
-        upload_res: {}
+        upload_res: {},
+        time_pickers: [
+            {
+                lable: "开始时间",
+                date_name: "start_date",
+                time_name: "start_time",
+                start_date: '2015-09-01',
+                end_date: '2017-09-01',
+                start_time: '00:00',
+                end_time: '23:59'
+            },
+            {
+                lable: "结束时间",
+                date_name: "end_date",
+                time_name: "end_time",
+                start_date: '2017-09-01',
+                end_date: '2020-12-30',
+                start_time: '00:00',
+                end_time: '23:59',
+            }
+        ]
     },
     showTopTips: function () {
         var that = this;
@@ -79,7 +99,7 @@ Page({
             'image': form_data.image,
             'description': form_data.description,
             'remark': form_data.remark,
-            'start_time': form_data.start_date + ' ' + form_data.start_time,
+            'start_time': form_data.start_date  + ' ' + form_data.start_time,
             'end_time': form_data.end_date + ' ' + form_data.end_time
         };
         console.log('form发生了submit事件，表单数据为：', params);
@@ -125,14 +145,15 @@ Page({
             success: function (res) {
 
                 // 获取文件路径
-                var filePath = res.tempFilePaths[0];
+                var file = res.tempFiles[0];
+                console.log(file.size);
 
                 // 获取文件名
-                var fileName = filePath.match(/(wxfile:\/\/)(.+)/)
+                var fileName = file.path.match(/(wxfile:\/\/)(.+)/)
                 fileName = fileName[2]
 
                 // 文件上传cos
-                upload(filePath, fileName, that);
+                upload(file.path, fileName, that);
             }
         })
         // console.log()

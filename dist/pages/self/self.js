@@ -1,4 +1,5 @@
 // self.js
+const App = getApp()
 var config = require('../../config.js');
 var common = require('../../common.js');
 
@@ -8,6 +9,18 @@ Page({
    * 页面的初始数据
    */
   data: {
+    items: [
+			{
+				icon: '../../assets/images/iconfont-order.png',
+				text: '我创建的测试',
+				path: '/pages/self_tests/list'
+			}, 
+			{
+				icon: '../../assets/images/iconfont-addr.png',
+				text: '我参与的测试',
+				path: '/pages/self_tests/list'
+			}, 
+		],
       jwt: {},
       account: {}
   },
@@ -15,6 +28,12 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
+  navigateTo: function(e) {
+		const index = e.currentTarget.dataset.index
+		const path = e.currentTarget.dataset.path
+
+		wx.navigateTo({'url': path})
+    },
   onLoad: function (options) {
       var test_id = options.test_id,
           that = this,

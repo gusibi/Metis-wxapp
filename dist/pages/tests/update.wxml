@@ -1,7 +1,7 @@
 <!--update.wxml-->
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
     <view class="page__hd">
-        <view class="page__title">修改测试</view>
+        <view class="page__title">修改测试{{test_title}}</view>
     </view>
     <view class="page__bd">
         <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{error_msg}}</view>
@@ -10,7 +10,7 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell weui-cell_input">
                     <view class="weui-cell__bd">
-                        <input class="weui-input" name="title" value="{{test.title}}" placeholder="请输入题目" />
+                        <input class="weui-input" name="title" placeholder="请输入题目" value="{{test.title}}"/>
                     </view>
                 </view>
             </view>
@@ -28,7 +28,7 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__bd" hidden="true">
-                        <input class="weui-input" name="image" value="{{test.image}}" placeholder="请输入题目"/>
+                        <input class="weui-input" name="image" value="{{files[0]}}" placeholder="请输入题目"/>
                     </view>
                     <view class="weui-uploader__files" id="uploaderFiles">
                         <block wx:for="{{files}}" wx:key="*this" wx:for-index="idx">
@@ -53,33 +53,18 @@
 
             <view class="weui-cells__title">测试时间</view>
             <view class="weui-cells weui-cells_after-title">
-                <view class="weui-cell weui-cell_input">
+                <view class="weui-cell weui-cell_input" wx:for="{{time_pickers}}" wx:key="lable">
                     <view class="weui-cell__hd">
-                        <view class="weui-label">开始时间</view>
+                        <view class="weui-label">{{item.lable}}</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <picker mode="date" name="start_date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindStartDateChange">
-                            <view class="weui-input">{{test.start_date}}</view>
+                        <picker mode="date" name="{{item.date_name}}" value="{{item.date_value||item.start_date}}" start="{{item.start_date}}" end="{{item.end_date}}" bindchange="bindStartDateChange">
+                            <view class="weui-input">{{item.date_value||item.start_date}}</view>
                         </picker>
                     </view>
                     <view class="weui-cell__bd">
-                        <picker mode="time" name="start_time" value="{{time}}" start="09:01" end="21:01" bindchange="bindStartTimeChange">
-                            <view class="weui-input">{{test.start_time}}</view>
-                        </picker>
-                    </view>
-                </view>
-                <view class="weui-cell weui-cell_input">
-                    <view class="weui-cell__hd">
-                        <view class="weui-label">结束时间</view>
-                    </view>
-                    <view class="weui-cell__bd">
-                        <picker mode="date" name="end_date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindEndDateChange">
-                            <view class="weui-input">{{test.end_date}}</view>
-                        </picker>
-                    </view>
-                    <view class="weui-cell__bd">
-                        <picker mode="time" name="end_time" value="{{time}}" start="09:01" end="21:01" bindchange="bindEndTimeChange">
-                            <view class="weui-input">{{test.end_time}}</view>
+                        <picker mode="time" name="{{item.time_name}}" value="{{item.time_value||item.start_time}}" start="{{item.start_time}}" end="{{item.end_time}}" bindchange="bindStartTimeChange">
+                            <view class="weui-input">{{item.time_value||item.start_time}}</view>
                         </picker>
                     </view>
                 </view>
@@ -89,7 +74,7 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__bd">
-                        <textarea class="weui-textarea" name="remark" placeholder="这里是备注，备备备备注" value="{{test.remar}}" style="height: 3.3em" />
+                        <textarea class="weui-textarea" name="remark" placeholder="这里是备注，备备备备注" value="{{test.remark}}" style="height: 3.3em" />
                         <view class="weui-textarea-counter">0/200</view>
                     </view>
                 </view>

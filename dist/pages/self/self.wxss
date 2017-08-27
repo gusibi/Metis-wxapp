@@ -1,1 +1,23 @@
 /* self.wxss */
+.userinfo {
+	display: flex;
+	flex-direction: column;
+	padding: 50rpx 0;
+	align-items: center;
+	background: #2184d9;
+}
+
+.userinfo-avatar {
+	width: 128rpx;
+	height: 128rpx;
+	margin: 20rpx;
+	border-radius: 50%;
+}
+
+.userinfo-nickname {
+	color: #fff;
+}
+
+.info_list {
+    margin-top: 20rpx;
+}
