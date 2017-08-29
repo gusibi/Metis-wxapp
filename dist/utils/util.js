@@ -11,11 +11,22 @@ function formatTime(date) {
   return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
+function formatObjectTime(object, fields){
+    console.log(fields)
+    for (var index in fields){
+        var field = fields[index]
+        var date = new Date(object[field])
+        object[field] = formatTime(date)
+    }
+    return object
+}
+
 function formatNumber(n) {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
 
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  formatObjectTime: formatObjectTime
 }

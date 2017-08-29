@@ -1,6 +1,8 @@
 // test_detail.js
 var config = require('../../config.js');
 var common = require('../../common.js');
+var util = require('../../utils/util.js');
+
 Page({
 
   /**
@@ -49,7 +51,7 @@ Page({
               console.log(res.data)
               if (res.statusCode === 200) {
                   that.setData({
-                      test: res.data
+                      test: util.formatObjectTime(res.data, ['start_time', 'end_time'])
                   })
               } else {
                   // 提示错误信息
@@ -80,7 +82,7 @@ Page({
               console.log(res.data)
               if (res.statusCode === 200) {
                   that.setData({
-                      test: res.data
+                      test: util.formatObjectTime(res.data, ['start_time', 'end_time'])
                   })
               } else {
                   // 提示错误信息
