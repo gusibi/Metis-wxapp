@@ -7,9 +7,10 @@
         "pages/self/self",
         "pages/tests/create",
         "pages/tests/update",
-        "pages/questions/create",
+        "pages/self_questions/create",
         "pages/self_tests/list",
-        "pages/self_tests/test_detail"
+        "pages/self_tests/test_detail",
+        "pages/self_tests/questions"
     ],
     "window": {
         "backgroundTextStyle": "light",

@@ -19,5 +19,10 @@
         <button class="weui-btn" type="primary" wx:if="{{test.status == 'draft'}}" bindtap="publishTest" >发布</button>
         <button class="weui-btn" type="default" bindtap="updateTest">修改</button>
         <button class="weui-btn" type="warn" type="warn" bindtap="deleteTest" >删除</button>
+     </view>
+     <view class="weui-btn-area">
+      <navigator url="/pages/self_tests/questions?test_id={{test.id}}&title={{test.title}}">
+            <button class="weui-btn" type="primary">题目列表</button>
+        </navigator>
         </view>
 </view>
