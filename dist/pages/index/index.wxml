@@ -15,7 +15,7 @@
     <view class="weui-panel weui-panel_access">
         <view class="weui-panel__hd">全部测试</view>
         <view class="weui-panel__bd">
-            <navigator  wx:for="{{handpicks}}" wx:key="id" url="/pages/test_preview/test_preview?title={{item.title}}&test_id={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+            <navigator  wx:for="{{handpicks}}" wx:key="id" url="/pages/self_tests/test_detail?title={{item.title}}&test_id={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                 <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <image class="weui-media-box__thumb" src="{{item.image}}"/>
                 </view>
