@@ -9,16 +9,13 @@
             <block wx:for="{{questions}}" wx:key="id">
                 <view class="kind-list__item">
                     <view id="{{item.id}}" class="weui-flex kind-list__item-hd {{item.open ? 'kind-list__item-hd_show' : ''}}" bindtap="kindToggle">
-                        <view class="weui-flex__item">{{item.name}}</view>
-                        <image class="kind-list__img" src="images/icon_nav_{{item.id}}.png"></image>
+                        <view class="weui-flex__item">{{item.title}}</view>
                     </view>
                     <view class="kind-list__item-bd {{item.open ? 'kind-list__item-bd_show' : ''}}">
                         <view class="weui-cells {{item.open ? 'weui-cells_show' : ''}}">
-                            <block wx:for="{{item.pages}}" wx:for-item="page" wx:key="*this">
-                                <navigator url="{{page}}/{{page}}" class="weui-cell weui-cell_access">
-                                    <view class="weui-cell__bd">{{page}}</view>
+                            <block wx:for="{{item.options}}" wx:for-item="option" wx:key="id">
+                                    <view class="weui-cell__bd">{{option.option}}</view>
                                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                                </navigator>
                             </block>
                         </view>
                     </view>
@@ -27,7 +24,7 @@
         </view>
     </view>
     <view class="weui-btn-area" wx:if="{{questions.length == 0}}">
-    <navigator url="/pages/self_questions/create?test_id={{test.id}}&title={{test_title}}">
+    <navigator url="/pages/self_questions/create?test_id={{test_id}}&title={{test_title}}">
             <button class="weui-btn" type="primary">添加一个题目</button>
         </navigator>
     </view>

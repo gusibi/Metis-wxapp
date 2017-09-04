@@ -20,11 +20,14 @@ Page({
           },
           method: "GET",
           success: function (res) {
-              console.log(res.data)
               if (res.statusCode === 200) {
+                  res.data.forEach(function(q){
+                      q.open = false
+                  })
                   that.setData({
                       questions: res.data
                   })
+                  console.log(that.data)
               } else {
                   // 提示错误信息
                   wx.showToast({
@@ -38,6 +41,19 @@ Page({
               console.log('获取列表失败');
           }
       })
+  },
+  kindToggle: function (e) {
+      var id = e.currentTarget.id, list = this.data.questions;
+      for (var i = 0, len = list.length; i < len; ++i) {
+          if (list[i].id == id) {
+              list[i].open = !list[i].open
+          } else {
+              list[i].open = false
+          }
+      }
+      this.setData({
+          questions: list
+      });
   },
   /**
    * 生命周期函数--监听页面加载

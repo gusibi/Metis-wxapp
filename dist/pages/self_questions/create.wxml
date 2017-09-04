@@ -1,16 +1,16 @@
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
     <view class="page__hd">
-        <view class="page__title">Input</view>
-        <view class="page__desc">表单输入</view>
+        <view class="page__title">添加一个问题</view>
+        <view class="page__desc">最多5个选项</view>
     </view>
     <view class="page__bd">
-        <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">错误提示</view>
-
+        <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{error_msg}}</view>
+        <form bindsubmit="formSubmit" bindreset="formReset">
         <view class="weui-cells__title">题目</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell">
                 <view class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="请输入文本" style="height: 3.3em" />
+                    <textarea class="weui-textarea" placeholder="请输入文本" style="height: 3.3em" name="title" />
                     <view class="weui-textarea-counter">0/200</view>
                 </view>
             </view>
@@ -22,10 +22,10 @@
                 <label class="weui-cell weui-check__label" wx:for="{{checkboxItems}}" wx:key="value">
                 
                     <view class="weui-cell__bd">
-                        <input class="weui-input" placeholder="请输入题目" />
+                        <input class="weui-input" placeholder="请输入题目" name="option{{item.value}}"/>
                     </view>
                     <view class="weui-cell__ft">
-                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
                         <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
                         <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
                     </view>
@@ -40,12 +40,13 @@
             <view class="weui-cell weui-cell_switch">
                 <view class="weui-cell__bd">是否多选</view>
                 <view class="weui-cell__ft">
-                    <switch />
+                    <switch name="multiple_choice" bindtap="swithType" />
                 </view>
             </view>
         </view>
         <view class="weui-btn-area">
-            <button class="weui-btn" type="primary" bindtap="showTopTips">确定</button>
+            <button class="weui-btn" type="primary" formType="submit">确定</button>
         </view>
+        </form>
     </view>
 </view>
