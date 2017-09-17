@@ -14,31 +14,13 @@ App({
         }
     },
     get_user_info: function(jwt) {
-        wx.request({
-            url: config.host + '/auth/accounts/self',
+        config.request({
+            url: '/auth/accounts/self',
             header: {
                 Authorization: jwt.token_type + ' ' + jwt.access_token
             },
             method: "GET",
-            success: function (res) {
-                if (res.statusCode === 201) {
-                    wx.showToast({
-                        title: '已注册',
-                        icon: 'success'
-                    });
-                } else if (res.statusCode === 401 || res.statusCode === 403) {
-                    wx.showToast({
-                        title: '未注册',
-                        icon: 'error'
-                    });
-                }
-
-                console.log(res.statusCode);
-                console.log('request token success');
-            },
-            fail: function (res) {
-                console.log('request token fail');
-            }
+            that: this
         })
     },
 

@@ -102,7 +102,7 @@ Page({
       console.log('update');
       var that = this;
       wx.redirectTo({
-          url: '/pages/tests/update?test_id=' + that.data.test_id + '&title=' + that.data.test_title,
+          url: '/pages/self_tests/update?test_id=' + that.data.test_id + '&title=' + that.data.test_title,
       });
   },
   deleteTest: function () {

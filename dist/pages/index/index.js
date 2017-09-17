@@ -42,29 +42,17 @@ Page({
     },
     get_test_handpicks: function(){
       var that = this;
-      wx.request({ // 发送请求 获取 jwts
-          url: config.host + '/v1/tests/handpick',
+      common.request({
+          url: '/v1/tests/handpick',
           header: {
               Authorization: 'JWT' + ' ' + that.data.jwt.access_token
           },
           method: "GET",
+          that: this,
           success: function (res) {
-              console.log(res.data)
-              if (res.statusCode === 200) {
-                  that.setData({
-                      handpicks: res.data
-                  })
-              } else {
-                  // 提示错误信息
-                  wx.showToast({
-                      title: res.data.text,
-                      icon: 'success',
-                      duration: 2000
-                  });
-              }
-          },
-          fail: function (res) {
-              console.log('添加测试失败');
+              that.setData({
+                  handpicks: res.data
+              })
           }
       })
   },
