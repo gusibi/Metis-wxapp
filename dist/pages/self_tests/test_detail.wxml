@@ -1,4 +1,6 @@
 <!--test_detail.wxml-->
+<wxs src="../../utils/utils.wxs" module="tools"/>
+
 <view class="page">
 <view class="card">
     <image class="card-img-top" src="{{test.image}}"/>
@@ -7,10 +9,10 @@
         <view class="card-title">{{test.title}}</view>
         <view class="card-text">{{test.description}}</view>
         <view class="card-text">
-        <text class="text-muted">开始时间：{{test.start_time}}</text>
+        <text class="text-muted">开始时间：{{tools.formatTime(test.start_time)}}</text>
         </view>
         <view class="card-text">
-        <text class="text-muted">截止时间：{{test.end_time}}</text>
+        <text class="text-muted">截止时间：{{tools.formatTime(test.end_time)}}</text>
         </view>
         </view>
     </view>

@@ -20,7 +20,6 @@ Page({
           jwt = {};
       try {
           var jwt = wx.getStorageSync('jwt')
-          console.log(jwt);
           if (jwt) {
               that.setData({
                   jwt: jwt
@@ -51,7 +50,7 @@ Page({
               console.log(res.data)
               if (res.statusCode === 200) {
                   that.setData({
-                      test: util.formatObjectTime(res.data, ['start_time', 'end_time'])
+                      test: res.data
                   })
               } else {
                   // 提示错误信息

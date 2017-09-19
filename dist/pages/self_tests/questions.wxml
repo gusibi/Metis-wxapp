@@ -16,8 +16,11 @@
                         <view class="weui-cells {{item.open ? 'weui-cells_show' : ''}}">
                             <block wx:for="{{item.options}}" wx:for-item="option" wx:key="id">
                                 <view class="weui-cell weui-cell_access ">
-                                <view class="">{{tools.num2letter(index)}} {{option.option}}: </view>
-                                <view class="">{{option.option}}</view>
+                                <view class="weui-cell__bd_left">{{tools.num2letter(index)}}.</view>
+                                <view class="weui-cell__bd">{{option.option}}</view>
+                                <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{option.is_checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
                                 </view>
                                 
                             </block>

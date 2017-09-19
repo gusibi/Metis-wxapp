@@ -19,6 +19,12 @@
     display: none
 }
 
+.weui-cell__bd_left {
+  color: #999999;
+  padding-right: 13px;
+  position: relative;
+}
+
 .weui-cells_show {
     opacity: 1;
     -webkit-transform: translateY(0);

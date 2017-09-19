@@ -12,7 +12,6 @@ function formatTime(date) {
 }
 
 function formatObjectTime(object, fields){
-    console.log(fields)
     for (var index in fields){
         var field = fields[index]
         var date = new Date(object[field])
