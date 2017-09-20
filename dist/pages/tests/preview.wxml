@@ -1,33 +1,31 @@
-_
+<!--test_detail.wxml-->
+<wxs src="../../utils/utils.wxs" module="tools" />
+
 <view class="page">
-    <view class="page__hd">
-        <view class="page__title">{{ title }}</view>
-        <view class="page__desc">{{title}}</view>
-    </view>
-    <view class="page__bd">
-        <view class="weui-form-preview">
-            <view class="weui-form-preview__hd">
-                <view class="weui-form-preview__label">测试时间</view>
-                <view class="weui-form-preview__value_in-hd">30分钟</view>
-            </view>
-            <view class="weui-form-preview__bd">
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">满分</view>
-                    <view class="weui-form-preview__value">100</view>
+    <view class="card">
+        <image class="card-img-top" src="{{test.image}}" />
+        <view class="card-block">
+            <view class="card-body">
+                <view class="card-title">{{test.title}}</view>
+                <view class="card-text">{{test.description}}</view>
+                <view class="card-text">
+                    <text class="text-muted">开始时间：{{tools.formatTime(test.start_time)}}</text>
                 </view>
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">题数</view>
-                    <view class="weui-form-preview__value">10</view>
+                <view class="card-text">
+                    <text class="text-muted">截止时间：{{tools.formatTime(test.end_time)}}</text>
                 </view>
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">出题人</view>
-                    <view class="weui-form-preview__value">代码学习小组</view>
+                <view class="card-text">
+                    <text class="text-muted">总分：100</text>
                 </view>
-            </view>
-            <view class="weui-form-preview__ft">
-                <navigator url="/pages/index/index" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">取消</navigator>
-                <navigator url="/pages/test/test?test_id={{test_id}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">开始</navigator>
+                <view class="card-text">
+                    <text class="text-muted">出题人：代码学习小组</text>
+                </view>
             </view>
         </view>
+    </view>
+    <view class="weui-btn-area">
+        <navigator url="/pages/tests/test?test_id={{test_id}}&title={{test.title}}">
+            <button class="weui-btn" type="primary">开始测试</button>
+        </navigator>
     </view>
 </view>

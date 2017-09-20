@@ -1,5 +1,5 @@
 <!--pages/self_tests/questions.wxml-->
-<wxs src="../../utils/utils.wxs" module="tools"/>
+<wxs src="../../utils/utils.wxs" module="tools" />
 
 <view class="page">
     <view class="page__hd">
@@ -10,19 +10,19 @@
             <block wx:for="{{questions}}" wx:key="id">
                 <view class="kind-list__item">
                     <view id="{{item.id}}" class="weui-flex kind-list__item-hd {{item.open ? 'kind-list__item-hd_show' : ''}}" bindtap="kindToggle">
-                        <view class="weui-flex__item">{{item.title}}</view>
+                        <view class="weui-flex__item">{{index+1}}.{{item.title}}</view>
                     </view>
                     <view class="kind-list__item-bd {{item.open ? 'kind-list__item-bd_show' : ''}}">
                         <view class="weui-cells {{item.open ? 'weui-cells_show' : ''}}">
                             <block wx:for="{{item.options}}" wx:for-item="option" wx:key="id">
                                 <view class="weui-cell weui-cell_access ">
-                                <view class="weui-cell__bd_left">{{tools.num2letter(index)}}.</view>
-                                <view class="weui-cell__bd">{{option.option}}</view>
-                                <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{option.is_checked}}">
-                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-                    </view>
+                                    <view class="weui-cell__bd_left">{{tools.num2letter(index)}}.</view>
+                                    <view class="weui-cell__bd">{{option.option}}</view>
+                                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{option.is_checked}}">
+                                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                                    </view>
                                 </view>
-                                
+
                             </block>
                         </view>
                     </view>
@@ -31,8 +31,8 @@
         </view>
     </view>
     <view class="weui-btn-area" wx:if="{{questions.length < 100}}">
-    <navigator url="/pages/self_questions/create?test_id={{test_id}}&title={{test_title}}">
+        <navigator url="/pages/self_questions/create?test_id={{test_id}}&title={{test_title}}">
             <button class="weui-btn" type="primary">添加一个题目</button>
-    </navigator>
+        </navigator>
     </view>
 </view>

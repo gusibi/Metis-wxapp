@@ -1,4 +1,6 @@
 /* test.wxss */
+
+
 /*!
  * WeUI v1.1.1 (https://github.com/weui/weui-wxss)
  * Copyright 2017 Tencent, Inc.
@@ -24,11 +26,17 @@
 
 .metis-btn-sp-area {
     width: 60%;
-    margin: 20px auto; 
+    margin: 20px auto;
 }
 
 .metis-panel {
     margin-top: 10px;
     position: relative;
     overflow: hidden
+}
+
+.weui-cell__bd_left {
+    color: #999999;
+    padding-right: 13px;
+    position: relative;
 }

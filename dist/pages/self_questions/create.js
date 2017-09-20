@@ -10,29 +10,44 @@ Page({
         test_id: '',
         test_title: '',
         showTopTips: false,
-        checkboxItems: [
+        radioItems: [
             { name: '', value: '0', checked: false },
-            { name: '', value: '1', checked: false }
+            { name: '', value: '1', checked: false },
+            { name: '', value: '2', checked: false },
+            { name: '', value: '3', checked: false }
         ],
-        error_msg: '错误提示',
-        checkedItem: []
+        error_msg: '错误提示'
 
     },
-    showTopTips: function (error_msg) {
+    showTopTips: function(error_msg) {
         var that = this;
         this.setData({
-            showTopTips: true
+            showTopTips: true,
+            error_msg: error_msg
         });
-        setTimeout(function () {
+        setTimeout(function() {
             that.setData({
                 showTopTips: false
             });
         }, 3000);
     },
-    checkboxChange: function (e) {
+    radioChange: function(e) {
+        console.log('radio发生change事件，携带value值为：', e.detail.value);
+
+        var radioItems = this.data.radioItems;
+        for (var i = 0, len = radioItems.length; i < len; ++i) {
+            radioItems[i].checked = radioItems[i].value == e.detail.value;
+        }
+
+        this.setData({
+            radioItems: radioItems
+        });
+    },
+    checkboxChange: function(e) {
         console.log('checkbox发生change事件，携带value值为：', e.detail.value);
 
-        var checkboxItems = this.data.checkboxItems, values = e.detail.value;
+        var checkboxItems = this.data.checkboxItems,
+            values = e.detail.value;
         for (var i = 0, lenI = checkboxItems.length; i < lenI; ++i) {
             checkboxItems[i].checked = false;
 
@@ -51,27 +66,27 @@ Page({
     },
     addOption: function() {
         console.log('添加一个题目')
-        var checkboxItems = this.data.checkboxItems;
-        var checkbox = checkboxItems[checkboxItems.length -1];
+        var radioItems = this.data.radioItems;
+        var checkbox = radioItems[radioItems.length - 1];
         var last_value = checkbox.value;
         var next_value = Number(last_value) + 1
-        if (next_value < 5){
-            checkboxItems.push({ name: '', value: next_value, checked: false })
+        if (next_value < 5) {
+            radioItems.push({ name: '', value: next_value, checked: false })
             this.setData({
-                checkboxItems: checkboxItems
+                radioItems: radioItems
             });
-        } else{
+        } else {
             this.showTopTips("最多只能添加5个选项")
         }
-       
+
     },
-    formSubmit: function (e) {
+    formSubmit: function(e) {
         var that = this;
         var form_data = e.detail.value;
         console.log(form_data)
-        console.log(this.data.checkboxItems)
+        console.log(this.data.radioItems)
         var options = [];
-        this.data.checkboxItems.forEach(function(item) {
+        this.data.radioItems.forEach(function(item) {
             var name = 'option' + item.value;
             var option = {
                 "option": form_data[name],
@@ -81,9 +96,9 @@ Page({
             options.push(option)
         })
         console.log(options)
-        if (form_data.multiple_choice){
+        if (form_data.multiple_choice) {
             var type = 'multiple_choice'
-        }else{
+        } else {
             var type = 'single_choice'
         }
         var params = {
@@ -92,14 +107,15 @@ Page({
             'type': type
         };
         console.log('form发生了submit事件，表单数据为：', params);
-        wx.request({ // 发送请求 获取 jwts
-            url: config.host + '/v1/self/tests/' + that.data.test_id + '/questions',
+        common.request({
+            url: '/v1/self/tests/' + that.data.test_id + '/questions',
             header: {
                 Authorization: 'JWT' + ' ' + that.data.jwt.access_token
             },
             data: params,
             method: "POST",
-            success: function (res) {
+            that: this,
+            success: function(res) {
                 if (res.statusCode === 201) {
                     // 得到 jwt 后存储到 storage，
                     wx.showToast({
@@ -117,20 +133,17 @@ Page({
                         duration: 2000
                     });
                 }
-            },
-            fail: function (res) {
-                console.log('添加测试失败');
             }
         })
     },
-    formReset: function () {
+    formReset: function() {
         console.log('form发生了reset事件')
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         var that = this,
             jwt = {};
         try {
@@ -157,49 +170,49 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function () {
+    onReady: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
+    onShow: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function () {
+    onHide: function() {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function () {
+    onUnload: function() {
 
     },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh: function () {
+    onPullDownRefresh: function() {
 
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function () {
+    onReachBottom: function() {
 
     },
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
 
     }
 })

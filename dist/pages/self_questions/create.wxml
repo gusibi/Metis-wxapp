@@ -6,20 +6,20 @@
     <view class="page__bd">
         <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{error_msg}}</view>
         <form bindsubmit="formSubmit" bindreset="formReset">
-        <view class="weui-cells__title">题目</view>
-        <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell">
-                <view class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="请输入文本" style="height: 3.3em" name="title" />
-                    <view class="weui-textarea-counter">0/200</view>
+            <view class="weui-cells__title">题目</view>
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">
+                        <textarea class="weui-textarea" placeholder="请输入文本" style="height: 3.3em" name="title" />
+                        <view class="weui-textarea-counter">0/200</view>
+                    </view>
                 </view>
             </view>
-        </view>
 
-        <view class="weui-cells__title">选项</view>
-        <view class="weui-cells weui-cells_after-title">
-            <checkbox-group bindchange="checkboxChange">
-                <label class="weui-cell weui-check__label" wx:for="{{checkboxItems}}" wx:key="value">
+            <view class="weui-cells__title">选项</view>
+            <view class="weui-cells weui-cells_after-title">
+                <radio-group bindchange="radioChange">
+                    <label class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
                 
                     <view class="weui-cell__bd">
                         <input class="weui-input" placeholder="请输入题目" name="option{{item.value}}"/>
@@ -30,23 +30,23 @@
                         <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
                     </view>
                 </label>
-                </checkbox-group>
-            <view class="weui-cell weui-cell_link">
-                <view class="weui-cell__bd" bindtap="addOption">添加更多</view>
-            </view>
-        </view>
-
-        <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell weui-cell_switch">
-                <view class="weui-cell__bd">是否多选</view>
-                <view class="weui-cell__ft">
-                    <switch name="multiple_choice" bindtap="swithType" />
+                </radio-group>
+                <view class="weui-cell weui-cell_link">
+                    <view class="weui-cell__bd" bindtap="addOption">添加更多</view>
                 </view>
             </view>
-        </view>
-        <view class="weui-btn-area">
-            <button class="weui-btn" type="primary" formType="submit">确定</button>
-        </view>
+
+            <!-- <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_switch">
+                    <view class="weui-cell__bd">是否多选</view>
+                    <view class="weui-cell__ft">
+                        <switch name="multiple_choice" bindtap="swithType" />
+                    </view>
+                </view>
+            </view> -->
+            <view class="weui-btn-area">
+                <button class="weui-btn" type="primary" formType="submit">确定</button>
+            </view>
         </form>
     </view>
 </view>
