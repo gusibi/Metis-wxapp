@@ -14,13 +14,16 @@ Page({
     onLoad: function(options) {
         var step = options.step || 0,
             test_id = options.test_id,
+            title = options.title,
             that = this,
             jwt = {};
         if (!test_id) {
             that.showTopTips('测试不存在！')
         } else {
             that.setData({
-                test_id: test_id
+                test_id: test_id,
+                title: title,
+                step: step
             })
         };
         try {
@@ -81,32 +84,24 @@ Page({
             that.showTopTips('请选择答案');
         } else {
             common.request({ // 发送请求 获取 jwt
-                url: '/v1/tests/' + that.data.test_id + '/questions',
+                url: '/v1/tests/' + that.data.test_id + '/answers',
                 header: {
                     Authorization: 'JWT' + ' ' + that.data.jwt.access_token
                 },
                 data: {
-                    step: that.step,
-                    value: that.checked_value
+                    question_id: that.data.question.id,
+                    options: [Number(that.checked_value)]
                 },
                 that: that,
                 method: "POST",
                 success: function(res) {
                     if (res.statusCode === 201) {
-                        // 得到 jwt 后存储到 storage，
-                        wx.showToast({
-                            title: '登录成功',
-                            icon: 'success'
-                        });
-                        wx.setStorage({
-                            key: "jwt",
-                            data: res.data
-                        });
-                        that.globalData.access_token = res.data.access_token;
-                        that.globalData.account_id = res.data.sub;
-                    } else if (res.statusCode === 401) {
-                        // 如果没有注册调用注册接口
-                        that.register();
+                        // 跳到下一题，
+                        var url = "/pages/tests/questions?test_id=" + that.data.test_id + "&title=" + that.data.title + "&step=" + (Number(that.data.step) + 1);
+                        console.log(url);
+                        wx.redirectTo({
+                            url: url,
+                        })
                     } else {
                         // 提示错误信息
                         wx.showToast({

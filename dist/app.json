@@ -2,7 +2,7 @@
     "pages": [
         "pages/index/index",
         "pages/tests/preview",
-        "pages/tests/test",
+        "pages/tests/questions",
         "pages/self/self",
         "pages/self_tests/create",
         "pages/self_tests/update",
