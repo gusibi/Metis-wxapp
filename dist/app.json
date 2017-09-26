@@ -9,7 +9,8 @@
         "pages/self_questions/create",
         "pages/self_tests/list",
         "pages/self_tests/test_detail",
-        "pages/self_tests/questions"
+        "pages/self_tests/questions",
+        "pages/tests/answered"
     ],
     "window": {
         "backgroundTextStyle": "light",

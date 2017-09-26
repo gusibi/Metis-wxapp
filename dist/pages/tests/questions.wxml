@@ -2,7 +2,7 @@
 
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
     <view class="page__hd" wx:if="{{test_id}}">
-        <view class="page__title">第一题</view>
+        <view class="page__title">第{{question.number + 1}}题</view>
         <view class="page__desc">单选</view>
     </view>
     <view class="page__bd" wx:if="{{test_id}}">
@@ -22,8 +22,9 @@
                 </radio-group>
             </view>
             <view class="weui-flex metis-panel">
-                <view class="weui-flex__item"><button class="weui-btn metis-btn-sp-area" type="default" bindtap="showTopTips">上一题</button></view>
-                <view class="weui-flex__item"><button class="weui-btn metis-btn-sp-area" type="primary" bindtap="submit">下一题</button></view>
+                <view class="weui-flex__item" wx:if="{{step > 0}}"><button class="weui-btn metis-btn-sp-area" type="default" bindtap="showTopTips">上一题</button></view>
+                <view class="weui-flex__item" wx:if="{{ step < questions.length-1 }}"><button class="weui-btn metis-btn-sp-area" type="primary" bindtap="submit">下一题</button></view>
+                <view class="weui-flex__item" wx:else><button class="weui-btn metis-btn-sp-area" type="primary" bindtap="submit">提交答案</button></view>
             </view>
         </view>
     </view>

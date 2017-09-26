@@ -19,7 +19,7 @@ Page({
         error_msg: '错误提示'
 
     },
-    showTopTips: function(error_msg) {
+    showTips: function(error_msg) {
         var that = this;
         this.setData({
             showTopTips: true,
@@ -44,13 +44,10 @@ Page({
         });
     },
     checkboxChange: function(e) {
-        console.log('checkbox发生change事件，携带value值为：', e.detail.value);
-
         var checkboxItems = this.data.checkboxItems,
             values = e.detail.value;
         for (var i = 0, lenI = checkboxItems.length; i < lenI; ++i) {
             checkboxItems[i].checked = false;
-
             for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
                 if (checkboxItems[i].value == values[j]) {
                     checkboxItems[i].checked = true;
@@ -76,16 +73,14 @@ Page({
                 radioItems: radioItems
             });
         } else {
-            this.showTopTips("最多只能添加5个选项")
+            this.showTips("最多只能添加5个选项")
         }
-
     },
     formSubmit: function(e) {
         var that = this;
         var form_data = e.detail.value;
-        console.log(form_data)
-        console.log(this.data.radioItems)
         var options = [];
+        var is_checked = false;
         this.data.radioItems.forEach(function(item) {
             var name = 'option' + item.value;
             var option = {
@@ -93,48 +88,52 @@ Page({
                 "index": Number(item.value),
                 "is_checked": item.checked
             }
+            is_checked = item.checked;
             options.push(option)
         })
-        console.log(options)
-        if (form_data.multiple_choice) {
-            var type = 'multiple_choice'
-        } else {
-            var type = 'single_choice'
-        }
-        var params = {
-            'title': form_data.title,
-            'options': options,
-            'type': type
-        };
-        console.log('form发生了submit事件，表单数据为：', params);
-        common.request({
-            url: '/v1/self/tests/' + that.data.test_id + '/questions',
-            header: {
-                Authorization: 'JWT' + ' ' + that.data.jwt.access_token
-            },
-            data: params,
-            method: "POST",
-            that: this,
-            success: function(res) {
-                if (res.statusCode === 201) {
-                    // 得到 jwt 后存储到 storage，
-                    wx.showToast({
-                        title: '创建成功',
-                        icon: 'success'
-                    });
-                    wx.redirectTo({
-                        url: '/pages/self_tests/questions?test_id=' + that.data.test_id + '&title=' + that.data.test_title,
-                    });
-                } else {
-                    // 提示错误信息
-                    wx.showToast({
-                        title: res.data.text,
-                        icon: 'success',
-                        duration: 2000
-                    });
-                }
+        if (!is_checked){
+            this.showTips("请选择答案")
+        }else{
+            if (form_data.multiple_choice) {
+                var type = 'multiple_choice'
+            } else {
+                var type = 'single_choice'
             }
-        })
+            var params = {
+                'title': form_data.title,
+                'options': options,
+                'type': type
+            };
+            common.request({
+                url: '/v1/self/tests/' + that.data.test_id + '/questions',
+                header: {
+                    Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+                },
+                data: params,
+                method: "POST",
+                that: this,
+                success: function (res) {
+                    if (res.statusCode === 201) {
+                        // 得到 jwt 后存储到 storage，
+                        wx.showToast({
+                            title: '创建成功',
+                            icon: 'success'
+                        });
+                        wx.redirectTo({
+                            url: '/pages/self_tests/questions?test_id=' + that.data.test_id + '&title=' + that.data.test_title,
+                        });
+                    } else {
+                        // 提示错误信息
+                        wx.showToast({
+                            title: res.data.text,
+                            icon: 'success',
+                            duration: 2000
+                        });
+                    }
+                }
+            })
+        }
+        
     },
     formReset: function() {
         console.log('form发生了reset事件')

@@ -12,7 +12,7 @@ Page({
         questions: []
     },
     onLoad: function(options) {
-        var step = options.step || 0,
+        var step = Number(options.step) || 0,
             test_id = options.test_id,
             title = options.title,
             that = this,
@@ -66,7 +66,7 @@ Page({
             }
         })
     },
-    showTopTips: function(msg) {
+    showTips: function(msg) {
         var that = this;
         this.setData({
             showTopTips: true,
@@ -78,40 +78,48 @@ Page({
             });
         }, 3000);
     },
+    submit_answers: function (that) {
+        common.request({ // 发送请求 获取 jwt
+            url: '/v1/tests/' + that.data.test_id + '/answers',
+            header: {
+                Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+            },
+            data: {
+                question_id: that.data.question.id,
+                options: [Number(that.checked_value)]
+            },
+            that: that,
+            method: "POST",
+            success: function (res) {
+                if (res.statusCode === 201) {
+                    if (res.data.last){
+                        // 跳到下一题
+                        // 跳到分数页
+                        var url = "/pages/tests/answered?test_id=" + that.data.test_id;
+                    }else{
+                        var url = "/pages/tests/questions?test_id=" + that.data.test_id + "&title=" + that.data.title + "&step=" + (Number(that.data.step) + 1);
+                    }
+                    wx.redirectTo({
+                        url: url,
+                    })
+                } else {
+                    // 提示错误信息
+                    wx.showToast({
+                        title: res.data.error_code,
+                        icon: 'success',
+                        duration: 2000
+                    });
+                }
+            }
+        })
+    },
     submit: function() {
         var that = this;
         if (!that.checked_value) {
-            that.showTopTips('请选择答案');
+            that.showTips('请选择答案');
         } else {
-            common.request({ // 发送请求 获取 jwt
-                url: '/v1/tests/' + that.data.test_id + '/answers',
-                header: {
-                    Authorization: 'JWT' + ' ' + that.data.jwt.access_token
-                },
-                data: {
-                    question_id: that.data.question.id,
-                    options: [Number(that.checked_value)]
-                },
-                that: that,
-                method: "POST",
-                success: function(res) {
-                    if (res.statusCode === 201) {
-                        // 跳到下一题，
-                        var url = "/pages/tests/questions?test_id=" + that.data.test_id + "&title=" + that.data.title + "&step=" + (Number(that.data.step) + 1);
-                        console.log(url);
-                        wx.redirectTo({
-                            url: url,
-                        })
-                    } else {
-                        // 提示错误信息
-                        wx.showToast({
-                            title: res.data.error_code,
-                            icon: 'success',
-                            duration: 2000
-                        });
-                    }
-                }
-            })
+            console.log(that);
+            that.submit_answers(that)
         }
     },
     radioChange: function(e) {
