@@ -126,12 +126,13 @@ var register = function(that) {
     wx.login({ // 调用登录接口获取 code
         success: function (res) {
             var code = res.code;
-            console.log('>>>>>>>>>>>>>>');
             wx.getUserInfo({
                 // 调用 getUserInfo 获取 encryptedData 和 iv
                 success: function (res) {
                     // success
-                    that.globalData.userInfo = res.userInfo;
+                    that.setData({
+                        userInfo: res.userInfo
+                    });
                     var encryptedData = res.encryptedData || 'encry';
                     var iv = res.iv || 'iv';
                     console.log(iv);

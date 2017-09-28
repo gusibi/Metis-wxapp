@@ -83,12 +83,15 @@ Page({
         var is_checked = false;
         this.data.radioItems.forEach(function(item) {
             var name = 'option' + item.value;
+            console.log(item);
             var option = {
                 "option": form_data[name],
                 "index": Number(item.value),
                 "is_checked": item.checked
             }
-            is_checked = item.checked;
+            if (item.checked){
+                is_checked = item.checked;
+            }
             options.push(option)
         })
         if (!is_checked){

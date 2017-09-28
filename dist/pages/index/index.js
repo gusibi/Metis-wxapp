@@ -5,13 +5,7 @@ var common = require('../../common.js');
 var app = getApp()
 Page({
     data: {
-        motto: 'Hello World',
         userInfo: {},
-        imgUrls: [
-            '../../style/images/tooopen_sy_143912755726.jpg',
-            '../../style/images/tooopen_sy_175866434296.jpg',
-            '../../style/images/tooopen_sy_175833047715.jpg'
-        ],
         indicatorDots: true,
         autoplay: true,
         interval: 5000,
@@ -19,21 +13,17 @@ Page({
         handpicks: []
     },
     //事件处理函数
-    bindViewTap: function() {
-        wx.navigateTo({
-            url: '../logs/logs'
-        })
-    },
     onLoad: function() {
         var that = this,
           jwt = {};
         try {
           var jwt = wx.getStorageSync('jwt')
-          console.log(jwt);
           if (jwt) {
               that.setData({
                   jwt: jwt
               })
+          }else{
+              common.login(that)
           }
       } catch (e) {
           common.login(that)
@@ -56,5 +46,4 @@ Page({
           }
       })
   },
-
 })
