@@ -30,6 +30,13 @@ Page({
       }
       that.get_test_handpicks();
     },
+    /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+    onPullDownRefresh: function () {
+        var that = this;
+        that.get_test_handpicks();
+    },
     get_test_handpicks: function(){
       var that = this;
       common.request({

@@ -28,11 +28,12 @@ Page({
         };
         try {
             var jwt = wx.getStorageSync('jwt')
-            console.log(jwt);
             if (jwt) {
                 that.setData({
                     jwt: jwt
                 })
+            }else{
+                common.login(that)
             }
         } catch (e) {
             common.login(that)
@@ -42,7 +43,7 @@ Page({
     get_test_questions: function(test_id, step) {
         var that = this;
         common.request({ // 发送请求 获取 jwts
-            url: '/v1/self/tests/' + test_id + '/questions',
+            url: '/v1/tests/' + test_id + '/questions',
             header: {
                 Authorization: 'JWT' + ' ' + that.data.jwt.access_token
             },
@@ -54,7 +55,6 @@ Page({
                         questions: res.data,
                         question: res.data[step]
                     })
-                    console.log(that.data)
                 } else {
                     // 提示错误信息
                     wx.showToast({
@@ -93,10 +93,10 @@ Page({
             success: function (res) {
                 if (res.statusCode === 201) {
                     if (res.data.last){
-                        // 跳到下一题
                         // 跳到分数页
                         var url = "/pages/tests/answered?test_id=" + that.data.test_id;
                     }else{
+                        // 跳到下一题
                         var url = "/pages/tests/questions?test_id=" + that.data.test_id + "&title=" + that.data.title + "&step=" + (Number(that.data.step) + 1);
                     }
                     wx.redirectTo({
@@ -124,8 +124,7 @@ Page({
     },
     radioChange: function(e) {
         var that = this;
-        console.log('radio发生change事件，携带value值为：', e.detail.value);
-
+        // console.log('radio发生change事件，携带value值为：', e.detail.value);
         var question = this.data.question;
         var options = question.options;
         for (var i = 0, len = options.length; i < len; ++i) {
