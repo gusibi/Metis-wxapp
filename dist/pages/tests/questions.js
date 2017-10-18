@@ -32,7 +32,7 @@ Page({
                 that.setData({
                     jwt: jwt
                 })
-            }else{
+            } else {
                 common.login(that)
             }
         } catch (e) {
@@ -78,7 +78,7 @@ Page({
             });
         }, 3000);
     },
-    submit_answers: function (that) {
+    submit_answers: function(that) {
         common.request({ // 发送请求 获取 jwt
             url: '/v1/tests/' + that.data.test_id + '/answers',
             header: {
@@ -90,12 +90,12 @@ Page({
             },
             that: that,
             method: "POST",
-            success: function (res) {
+            success: function(res) {
                 if (res.statusCode === 201) {
-                    if (res.data.last){
+                    if (res.data.last) {
                         // 跳到分数页
-                        var url = "/pages/tests/answered?test_id=" + that.data.test_id;
-                    }else{
+                        var url = "/pages/tests/answered?test_id=" + that.data.test_id + "&title=" + that.data.title;
+                    } else {
                         // 跳到下一题
                         var url = "/pages/tests/questions?test_id=" + that.data.test_id + "&title=" + that.data.title + "&step=" + (Number(that.data.step) + 1);
                     }

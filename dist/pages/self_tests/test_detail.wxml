@@ -1,30 +1,31 @@
 <!--test_detail.wxml-->
-<wxs src="../../utils/utils.wxs" module="tools"/>
+<wxs src="../../utils/utils.wxs" module="tools" />
 
 <view class="page">
-<view class="card">
-    <image class="card-img-top" src="{{test.image}}"/>
-    <view class="card-block">
-    <view class="card-body">
-        <view class="card-title">{{test.title}}</view>
-        <view class="card-text">{{test.description}}</view>
-        <view class="card-text">
-        <text class="text-muted">开始时间：{{tools.formatTime(test.start_time)}}</text>
+    <view class="card">
+        <image class="card-img-top" src="{{test.image}}" />
+        <view class="card-block">
+            <view class="card-body">
+                <view class="card-title">{{test.title}}</view>
+                <view class="card-text">{{test.description}}</view>
+                <view class="card-text">
+                    <text class="text-muted">开始时间：{{tools.formatTime(test.start_time)}}</text>
+                </view>
+                <view class="card-text">
+                    <text class="text-muted">截止时间：{{tools.formatTime(test.end_time)}}</text>
+                </view>
+            </view>
         </view>
-        <view class="card-text">
-        <text class="text-muted">截止时间：{{tools.formatTime(test.end_time)}}</text>
-        </view>
-        </view>
-    </view>
     </view>
     <view class="button-sp-area">
-        <button class="weui-btn" type="primary" wx:if="{{test.status == 'draft'}}" bindtap="publishTest" >发布</button>
-        <button class="weui-btn" type="default" bindtap="updateTest">修改</button>
-        <button class="weui-btn" type="warn" type="warn" bindtap="deleteTest" >删除</button>
-     </view>
-     <view class="weui-btn-area">
-      <navigator url="/pages/self_tests/questions?test_id={{test.id}}&title={{test.title}}">
+        <button class="weui-btn mini-btn" size="mini" type="primary" wx:if="{{test.status == 'draft'}}" bindtap="publishTest">发布</button>
+        <button class="weui-btn mini-btn" size="mini" type="primary" wx:if="{{test.status == 'published'}}" bindtap="cancelPublishTest">取消发布</button>
+        <button class="weui-btn mini-btn" size="mini" type="default" bindtap="updateTest">修改</button>
+        <button class="weui-btn mini-btn" size="mini" type="warn" type="warn" bindtap="deleteTest">删除</button>
+    </view>
+    <view class="weui-btn-area">
+        <navigator url="/pages/self_tests/questions?test_id={{test.id}}&title={{test.title}}">
             <button class="weui-btn" type="primary">题目列表</button>
         </navigator>
-        </view>
+    </view>
 </view>

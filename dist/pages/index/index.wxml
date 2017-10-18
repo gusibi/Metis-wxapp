@@ -15,9 +15,10 @@
     <view class="weui-panel weui-panel_access">
         <view class="weui-panel__hd">全部测试</view>
         <view class="weui-panel__bd">
-            <navigator  wx:for="{{handpicks}}" wx:key="id" url="/pages/tests/preview?title={{item.title}}&test_id={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+            <!-- <navigator  wx:for="{{handpicks}}" wx:key="id" url="/pages/tests/preview?title={{item.title}}&test_id={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"> -->
+            <navigator wx:for="{{handpicks}}" wx:key="id" url="/pages/tests/preview?title={{item.title}}&test_id={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                 <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                    <image class="weui-media-box__thumb" src="{{item.image}}"/>
+                    <image class="weui-media-box__thumb" src="{{item.image}}" />
                 </view>
                 <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                     <view class="weui-media-box__title">{{item.title}}</view>
@@ -32,9 +33,9 @@
             </view>
         </view>
     </view>
-        <view class="weui-btn-area">
-            <navigator url="/pages/tests/create">
-                <button class="weui-btn" type="primary">新建一个测试</button>
-            </navigator>
-        </view>
+    <view class="weui-btn-area">
+        <navigator url="/pages/tests/create">
+            <button class="weui-btn" type="primary">新建一个测试</button>
+        </navigator>
+    </view>
 </view>

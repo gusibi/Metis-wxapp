@@ -13,6 +13,7 @@
         "pages/tests/answered"
     ],
     "window": {
+        "enablePullDownRefresh": true,
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#2184d9",
         "backgroundColor": "#f8f8f8",

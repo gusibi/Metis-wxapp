@@ -1,3 +1,29 @@
-<!--pages/tests/answered.wxml-->
-<text>pages/tests/answered.wxml</text>
-<text>厉害啊 做完了题目</text>
+<!--test_detail.wxml-->
+<wxs src="../../utils/utils.wxs" module="tools" />
+<view class="page">
+    <view class="weui-msg">
+        <view class="weui-msg__desc">goodspeed</view>
+        <view class="weui-msg__icon-area">
+            <image src="../../style/images/{{tools.score_image(answer.score, 100)}}" class="image-area" size="110"></image>
+        </view>
+        <view class="weui-msg__text-area">
+            <view class="weui-msg__title">{{answer.score}} 分</view>
+            <view class="weui-msg__desc">这是测试标题</view>
+        </view>
+        <view class="weui-msg__opr-area">
+            <view class="weui-btn-area">
+                <navigator url="/pages/tests/questions?test_id={{test_id}}&title={{test.title}}&step=0 " class="btn-floating btn-small btn-fb ">
+                    <button class="weui-btn" type="primary">重新答题</button>
+                </navigator>
+            </view>
+        </view>
+        <view class="weui-msg__extra-area">
+            <view class="weui-footer">
+                <view class="weui-footer__links">
+                    <navigator url=" " class="weui-footer__link ">随你选</navigator>
+                </view>
+                <view class="weui-footer__text ">Copyright © 2017-2020 gusibi.com</view>
+            </view>
+        </view>
+    </view>
+</view>

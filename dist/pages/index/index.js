@@ -37,6 +37,9 @@ Page({
         var that = this;
         that.get_test_handpicks();
     },
+    onPullDownRefresh: function () {
+        wx.stopPullDownRefresh()
+    },
     get_test_handpicks: function(){
       var that = this;
       common.request({

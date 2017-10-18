@@ -14,6 +14,21 @@ var numberToLetter = function (num) {
     return num2letter[num.toString()]
 }
 
+var score_image = function(score, total_score){
+    var rating = score / total_score;
+    if (rating >= 0.8){
+        return 'h1.svg'
+    }else if (rating >= 0.6){
+        return 'h2.svg'
+    }else if (rating >= 0.4){
+        return 'h3.svg'
+    }else if (rating >= 0.2){
+        return 'h4.svg'
+    }else{
+        return 'h5.svg'
+    }
+}
+
 function formatTime(date) {
     var date = getDate(date*1000)
     var year = date.getFullYear()
@@ -36,5 +51,6 @@ function formatNumber(n) {
 
 module.exports = {
     num2letter: numberToLetter,
-    formatTime: formatTime
+    formatTime: formatTime,
+    score_image: score_image
 };
