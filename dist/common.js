@@ -1,6 +1,6 @@
 var config = require('./config.js');
 
-var numberToLetter = function (num) {
+var numberToLetter = function(num) {
     num2letter = {
         0: 'A',
         1: 'B',
@@ -16,7 +16,7 @@ var numberToLetter = function (num) {
     return num2letter[num]
 }
 
-var request = function (option) {
+var request = function(option) {
     var url = config.host + option.url;
 
     var Authorization = option.header.Authorization || config.basic_token;
@@ -28,41 +28,36 @@ var request = function (option) {
             'content-type': 'application/json',
             'Authorization': Authorization
         },
-        success: function (res) {
+        success: function(res) {
             var code = res.statusCode;
             if (/^2\d{2}$/.test(code)) {
                 typeof option.success === 'function' && option.success(res);
-            } else if (code === 403 || code === 401){
+            } else if (code === 403 || code === 401) {
                 login(option.that)
-            }
-            else {
+            } else {
                 typeof option.fail === 'function' && option.fail(res);
             }
         },
-        fail: function (res) {
+        fail: function(res) {
             typeof option.fail === 'function' && option.fail(res);
         },
-        complete: function (res) {
+        complete: function(res) {
             typeof option.complete === 'function' && option.complete(res);
         }
     })
 }
 
-var login = function(that) {
-    // 登录部分代码
+var login = function(option) {
+    var app = getApp()
+        // 登录部分代码
     wx.login({
         // 调用 login 获取 code
-        success: function (res) {
+        success: function(res) {
             var code = res.code;
             wx.getUserInfo({
                 // 调用 getUserInfo 获取 encryptedData 和 iv
-                success: function (res) {
+                success: function(res) {
                     // success
-                    console.log(res)
-                    console.log(that)
-                    that.setData({
-                        userInfo: res.userInfo
-                    })
                     var encryptedData = res.encryptedData || 'encry';
                     var iv = res.iv || 'iv';
                     console.log(config.basic_token);
@@ -78,21 +73,16 @@ var login = function(that) {
                             auth_approach: 'wxapp',
                         },
                         method: "POST",
-                        success: function (res) {
+                        success: function(res) {
                             if (res.statusCode === 201) {
                                 // 得到 jwt 后存储到 storage，
                                 wx.showToast({
                                     title: '登录成功',
                                     icon: 'success'
                                 });
-                                wx.setStorage({
-                                    key: "jwt",
-                                    data: res.data
-                                });
-                                that.setData({
-                                    access_token: res.data.access_token,
-                                    account_id: res.data.sub
-                                })
+                                app.globalData.jwt = res.data
+                                console.log(app.globalData)
+                                option && option();
                             } else if (res.statusCode === 401) {
                                 // 如果没有注册调用注册接口
                                 register(that);
@@ -105,15 +95,15 @@ var login = function(that) {
                                 });
                             }
                         },
-                        fail: function (res) {
+                        fail: function(res) {
                             console.log('request token fail');
                         }
                     })
                 },
-                fail: function () {
+                fail: function() {
                     // fail
                 },
-                complete: function () {
+                complete: function() {
                     // complete
                 }
             })
@@ -124,11 +114,11 @@ var login = function(that) {
 var register = function(that) {
     // 注册代码
     wx.login({ // 调用登录接口获取 code
-        success: function (res) {
+        success: function(res) {
             var code = res.code;
             wx.getUserInfo({
                 // 调用 getUserInfo 获取 encryptedData 和 iv
-                success: function (res) {
+                success: function(res) {
                     // success
                     that.setData({
                         userInfo: res.userInfo
@@ -147,7 +137,7 @@ var register = function(that) {
                             code: code,
                         },
                         method: "POST",
-                        success: function (res) {
+                        success: function(res) {
                             if (res.statusCode === 201) {
                                 wx.showToast({
                                     title: '注册成功',
@@ -169,15 +159,15 @@ var register = function(that) {
                             console.log(res.statusCode);
                             console.log('request token success');
                         },
-                        fail: function (res) {
+                        fail: function(res) {
                             console.log('request token fail');
                         }
                     })
                 },
-                fail: function () {
+                fail: function() {
                     // fail
                 },
-                complete: function () {
+                complete: function() {
                     // complete
                 }
             })

@@ -1,4 +1,4 @@
-<wxs src="../../utils/utils.wxs" module="tools" />
+<wxs src="../../../utils/utils.wxs" module="tools" />
 
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
     <view class="page__hd" wx:if="{{test_id}}">

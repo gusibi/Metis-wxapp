@@ -89,14 +89,14 @@ Page({
                 "index": Number(item.value),
                 "is_checked": item.checked
             }
-            if (item.checked){
+            if (item.checked) {
                 is_checked = item.checked;
             }
             options.push(option)
         })
-        if (!is_checked){
+        if (!is_checked) {
             this.showTips("请选择答案")
-        }else{
+        } else {
             if (form_data.multiple_choice) {
                 var type = 'multiple_choice'
             } else {
@@ -115,7 +115,7 @@ Page({
                 data: params,
                 method: "POST",
                 that: this,
-                success: function (res) {
+                success: function(res) {
                     if (res.statusCode === 201) {
                         // 得到 jwt 后存储到 storage，
                         wx.showToast({
@@ -123,7 +123,7 @@ Page({
                             icon: 'success'
                         });
                         wx.redirectTo({
-                            url: '/pages/self_tests/questions?test_id=' + that.data.test_id + '&title=' + that.data.test_title,
+                            url: '/pages/self_tests/questions/questions?test_id=' + that.data.test_id + '&title=' + that.data.test_title,
                         });
                     } else {
                         // 提示错误信息
@@ -136,7 +136,7 @@ Page({
                 }
             })
         }
-        
+
     },
     formReset: function() {
         console.log('form发生了reset事件')

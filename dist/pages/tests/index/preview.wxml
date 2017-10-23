@@ -1,5 +1,5 @@
 <!--test_detail.wxml-->
-<wxs src="../../utils/utils.wxs" module="tools" />
+<wxs src="../../../utils/utils.wxs" module="tools" />
 
 <view class="page">
     <view class="card">
@@ -24,7 +24,7 @@
         </view>
     </view>
     <view class="weui-btn-area">
-        <navigator url="/pages/tests/questions?test_id={{test_id}}&title={{test.title}}">
+        <navigator url="/pages/tests/questions/questions?test_id={{test_id}}&title={{test.title}}">
             <button class="weui-btn" type="primary">开始测试</button>
         </navigator>
     </view>

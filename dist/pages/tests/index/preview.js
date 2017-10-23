@@ -1,7 +1,7 @@
 // test.js
-var config = require('../../config.js');
-var common = require('../../common.js');
-var util = require('../../utils/util.js');
+var config = require('../../../config.js');
+var common = require('../../../common.js');
+var util = require('../../../utils/util.js');
 
 Page({
 

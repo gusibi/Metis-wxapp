@@ -1,5 +1,5 @@
 <!--test_detail.wxml-->
-<wxs src="../../utils/utils.wxs" module="tools" />
+<wxs src="../../../utils/utils.wxs" module="tools" />
 
 <view class="page">
     <view class="card">
@@ -24,8 +24,6 @@
         <button class="weui-btn mini-btn" size="mini" type="warn" type="warn" bindtap="deleteTest">删除</button>
     </view>
     <view class="weui-btn-area">
-        <navigator url="/pages/self_tests/questions?test_id={{test.id}}&title={{test.title}}">
-            <button class="weui-btn" type="primary">题目列表</button>
-        </navigator>
+        <button class="weui-btn" type="primary" bindtap="redirectToQuestions">题目列表</button>
     </view>
 </view>

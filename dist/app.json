@@ -1,16 +1,16 @@
 {
     "pages": [
         "pages/index/index",
-        "pages/tests/preview",
-        "pages/tests/questions",
         "pages/self/self",
-        "pages/self_tests/create",
-        "pages/self_tests/update",
+        "pages/self_tests/create/create",
+        "pages/self_tests/update/update",
+        "pages/self_tests/list/list",
+        "pages/self_tests/detail/detail",
+        "pages/self_tests/questions/questions",
         "pages/self_questions/create",
-        "pages/self_tests/list",
-        "pages/self_tests/test_detail",
-        "pages/self_tests/questions",
-        "pages/tests/answered"
+        "pages/tests/answered/answered",
+        "pages/tests/index/preview",
+        "pages/tests/questions/questions"
     ],
     "window": {
         "enablePullDownRefresh": true,
@@ -25,8 +25,7 @@
         "selectedColor": "#1a84db",
         "backgroundColor": "#ffffff",
         "borderStyle": "white",
-        "list": [
-            {
+        "list": [{
                 "pagePath": "pages/index/index",
                 "text": "首页",
                 "iconPath": "style/images/home.png",

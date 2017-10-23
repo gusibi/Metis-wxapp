@@ -1,5 +1,5 @@
 <!--pages/self_tests/questions.wxml-->
-<wxs src="../../utils/utils.wxs" module="tools" />
+<wxs src="../../../utils/utils.wxs" module="tools" />
 
 <view class="page">
     <view class="page__hd">
@@ -22,7 +22,6 @@
                                         <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
                                     </view>
                                 </view>
-
                             </block>
                         </view>
                     </view>
@@ -31,8 +30,6 @@
         </view>
     </view>
     <view class="weui-btn-area" wx:if="{{questions.length < 100}}">
-        <navigator url="/pages/self_questions/create?test_id={{test_id}}&title={{test_title}}">
-            <button class="weui-btn" type="primary">添加一个题目</button>
-        </navigator>
+        <button class="weui-btn" type="primary" bindtap="redirectAddQuestion">添加一个题目</button>
     </view>
 </view>

@@ -1,7 +1,7 @@
 // test_detail.js
-var config = require('../../config.js');
-var common = require('../../common.js');
-var util = require('../../utils/util.js');
+var config = require('../../../config.js');
+var common = require('../../../common.js');
+var util = require('../../../utils/util.js');
 
 Page({
 
@@ -131,7 +131,7 @@ Page({
         console.log('update');
         var that = this;
         wx.redirectTo({
-            url: '/pages/self_tests/update?test_id=' + that.data.test_id + '&title=' + that.data.test_title,
+            url: '/pages/self_tests/update/update?test_id=' + that.data.test_id + '&title=' + that.data.test_title,
         });
     },
     deleteTest: function() {
@@ -147,7 +147,7 @@ Page({
                 console.log(res.data)
                 if (res.statusCode === 204) {
                     wx.redirectTo({
-                        url: '/pages/self_tests/list',
+                        url: '/pages/self_tests/list/list',
                     });
                 } else {
                     // 提示错误信息
@@ -160,6 +160,22 @@ Page({
             },
             fail: function(res) {
                 console.log('删除失败');
+            }
+        })
+    },
+    redirectToQuestions: function() {
+        var that = this;
+        var url = "/pages/self_tests/questions/questions?test_id=" + that.data.test_id + "&title=" + that.data.test_title;
+        wx.redirectTo({
+            url: url,
+            success: function(res) {
+                // success
+            },
+            fail: function() {
+                // fail
+            },
+            complete: function() {
+                // complete
             }
         })
     },
