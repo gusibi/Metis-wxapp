@@ -33,7 +33,7 @@ var request = function(option) {
             if (/^2\d{2}$/.test(code)) {
                 typeof option.success === 'function' && option.success(res);
             } else if (code === 403 || code === 401) {
-                login(option.that)
+                login()
             } else {
                 typeof option.fail === 'function' && option.fail(res);
             }
@@ -85,7 +85,7 @@ var login = function(option) {
                                 option && option();
                             } else if (res.statusCode === 401) {
                                 // 如果没有注册调用注册接口
-                                register(that);
+                                register(option);
                             } else {
                                 // 提示错误信息
                                 wx.showToast({
@@ -111,8 +111,9 @@ var login = function(option) {
     })
 }
 
-var register = function(that) {
+var register = function(option) {
     // 注册代码
+    var app = getApp();
     wx.login({ // 调用登录接口获取 code
         success: function(res) {
             var code = res.code;
@@ -120,12 +121,9 @@ var register = function(that) {
                 // 调用 getUserInfo 获取 encryptedData 和 iv
                 success: function(res) {
                     // success
-                    that.setData({
-                        userInfo: res.userInfo
-                    });
+                    app.globalData.userInfo = res.userInfo;
                     var encryptedData = res.encryptedData || 'encry';
                     var iv = res.iv || 'iv';
-                    console.log(iv);
                     wx.request({ // 请求注册用户接口
                         url: config.host + '/auth/accounts/wxapp',
                         header: {
@@ -143,21 +141,18 @@ var register = function(that) {
                                     title: '注册成功',
                                     icon: 'success'
                                 });
-                                login(that);
+                                login(option);
                             } else if (res.statusCode === 400) {
                                 wx.showToast({
                                     title: '用户已注册',
                                     icon: 'success'
                                 });
-                                that.login();
                             } else if (res.statusCode === 403) {
                                 wx.showToast({
                                     title: res.data.text,
                                     icon: 'success'
                                 });
                             }
-                            console.log(res.statusCode);
-                            console.log('request token success');
                         },
                         fail: function(res) {
                             console.log('request token fail');

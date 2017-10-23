@@ -1,6 +1,7 @@
 // list.js
 var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 var config = require('../../../config.js');
+var common = require('../../../common.js');
 var app = getApp();
 Page({
 
@@ -8,7 +9,6 @@ Page({
      * 页面的初始数据
      */
     data: {
-        jwt: {},
         tabs: ["已发布", "草稿"],
         activeIndex: 0,
         sliderOffset: 0,
@@ -33,17 +33,7 @@ Page({
      */
     onLoad: function() {
         var that = this;
-        try {
-            var jwt = wx.getStorageSync('jwt')
-            console.log(jwt);
-            if (jwt) {
-                that.setData({
-                    jwt: jwt
-                })
-            }
-        } catch (e) {
-            common.login(that)
-        };
+        app.checkLogin();
         wx.getSystemInfo({
             success: function(res) {
                 that.setData({
@@ -57,12 +47,13 @@ Page({
 
     get_tests: function(status) {
         var that = this;
-        wx.request({ // 已发布的测试
-            url: config.host + '/v1/self/tests?status=' + status,
+        common.request({ // 已发布的测试
+            url: '/v1/self/tests?status=' + status,
             header: {
                 Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
             method: "GET",
+            that: that,
             success: function(res) {
                 if (res.statusCode === 200) {
                     if (status === 'published') {
@@ -80,9 +71,6 @@ Page({
                         icon: 'success'
                     });
                 }
-            },
-            fail: function(res) {
-                console.log('request token fail');
             }
         })
     },

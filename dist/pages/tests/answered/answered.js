@@ -1,4 +1,5 @@
 // pages/tests/answered.js
+var app = getApp();
 var config = require('../../../config.js');
 var common = require('../../../common.js');
 var util = require('../../../utils/util.js');
@@ -33,26 +34,16 @@ Page({
                 step: step
             })
         };
-        try {
-            var jwt = wx.getStorageSync('jwt')
-            if (jwt) {
-                that.setData({
-                    jwt: jwt
-                })
-            } else {
-                common.login(that)
-            }
-        } catch (e) {
-            common.login(that)
-        }
-        this.get_test_score(test_id, step);
+        app.checkLogin(this.get_test_score);
     },
-    get_test_score: function(test_id, step) {
-        var that = this;
+    get_test_score: function() {
+        var that = this,
+            test_id = this.data.test_id,
+            step = this.data.step;
         common.request({ // 发送请求 获取 jwts
             url: '/v1/tests/' + test_id + '/score',
             header: {
-                Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+                Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
             method: "GET",
             that: that,

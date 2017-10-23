@@ -1,6 +1,7 @@
 // create.js
 var config = require('../../config.js');
 var common = require('../../common.js');
+var app = getApp();
 Page({
 
     /**
@@ -110,14 +111,13 @@ Page({
             common.request({
                 url: '/v1/self/tests/' + that.data.test_id + '/questions',
                 header: {
-                    Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+                    Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
                 },
                 data: params,
                 method: "POST",
                 that: this,
                 success: function(res) {
                     if (res.statusCode === 201) {
-                        // 得到 jwt 后存储到 storage，
                         wx.showToast({
                             title: '创建成功',
                             icon: 'success'
@@ -146,19 +146,8 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        var that = this,
-            jwt = {};
-        try {
-            var jwt = wx.getStorageSync('jwt')
-            console.log(jwt);
-            if (jwt) {
-                that.setData({
-                    jwt: jwt
-                })
-            }
-        } catch (e) {
-            common.login(that)
-        }
+        var that = this;
+        app.checkLogin();
         that.setData({
             title: options.title,
             test_id: options.test_id

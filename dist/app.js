@@ -10,10 +10,8 @@ App({
     checkLogin: function(cb) {
         var that = this;
         if (that.globalData.jwt) {
-            console.log('111111')
             cb && cb();
         } else {
-            console.log('22222')
             common.login(cb ? cb : function() {})
         }
     },

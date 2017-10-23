@@ -1,5 +1,5 @@
 // self.js
-const App = getApp()
+const app = getApp()
 var config = require('../../config.js');
 var common = require('../../common.js');
 
@@ -37,47 +37,25 @@ Page({
         var test_id = options.test_id,
             that = this,
             jwt = {};
-        try {
-            var jwt = wx.getStorageSync('jwt')
-            console.log(jwt);
-            if (jwt) {
-                that.setData({
-                    jwt: jwt
-                })
-            }
-        } catch (e) {
-            common.login(that)
-        }
-        try {
-            var account = wx.getStorageSync('account_self')
-            if (account) {
-                that.setData({
-                    account: account
-                })
-            } else {
-                that.get_user_info();
-            }
-        } catch (e) {
-            that.get_user_info();
-        }
 
+        app.checkLogin(that.get_user_info());
     },
 
     get_user_info: function() {
         var that = this;
-        wx.request({ // 请求注册用户接口
-            url: config.host + '/auth/accounts/self',
+        common.request({ // 请求注册用户接口
+            url: '/auth/accounts/self',
             header: {
-                Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+                Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
             method: "GET",
+            that: this,
             success: function(res) {
                 if (res.statusCode === 200) {
                     wx.showToast({
                         title: '取到用户信息',
                         icon: 'success'
                     });
-                    console.log(res.data);
                     that.setData({
                         account: res.data
                     });
@@ -88,9 +66,6 @@ Page({
                         icon: 'success'
                     });
                 }
-            },
-            fail: function(res) {
-                console.log('request token fail');
             }
         })
     },

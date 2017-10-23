@@ -2,6 +2,7 @@
 var config = require('../../../config.js');
 var common = require('../../../common.js');
 var upload = require('../../../utils/upload.js')
+var app = getApp();
 Page({
     /**
      * 页面的初始数据
@@ -101,22 +102,22 @@ Page({
             'end_time': form_data.end_date + ' ' + form_data.end_time
         };
         console.log('form发生了submit事件，表单数据为：', params);
-        wx.request({ // 发送请求 获取 jwts
-            url: config.host + '/v1/self/tests',
+        common.request({ // 发送请求 创建测试
+            url: '/v1/self/tests',
             header: {
-                Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+                Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
             data: params,
             method: "POST",
+            that: that,
             success: function(res) {
                 if (res.statusCode === 201) {
-                    // 得到 jwt 后存储到 storage，
                     wx.showToast({
                         title: '创建成功',
                         icon: 'success'
                     });
                     wx.redirectTo({
-                        url: '/pages/self_tests/test_detail?test_id=' + res.data.id + '&title=' + res.data.title,
+                        url: '/pages/self_tests/detail/detail?test_id=' + res.data.id + '&title=' + res.data.title,
                     });
                 } else {
                     // 提示错误信息
@@ -126,9 +127,6 @@ Page({
                         duration: 2000
                     });
                 }
-            },
-            fail: function(res) {
-                console.log('添加测试失败');
             }
         })
     },
@@ -160,19 +158,8 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        var that = this,
-            jwt = {};
-        try {
-            var jwt = wx.getStorageSync('jwt')
-            console.log(jwt);
-            if (jwt) {
-                that.setData({
-                    jwt: jwt
-                })
-            }
-        } catch (e) {
-            common.login(that)
-        }
+        var that = this;
+        app.checkLogin();
     },
 
     /**

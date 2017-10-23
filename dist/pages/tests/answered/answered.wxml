@@ -4,7 +4,7 @@
     <view class="weui-msg">
         <view class="weui-msg__desc">goodspeed</view>
         <view class="weui-msg__icon-area">
-            <image src="../../style/images/{{tools.score_image(answer.score, 100)}}" class="image-area" size="110"></image>
+            <image src="../../../style/images/{{tools.score_image(answer.score, 100)}}" class="image-area" size="110"></image>
         </view>
         <view class="weui-msg__text-area">
             <view class="weui-msg__title">{{answer.score}} 分</view>

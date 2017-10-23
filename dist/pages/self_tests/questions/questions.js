@@ -17,12 +17,13 @@ Page({
     get_test_questions: function() {
         var that = this;
         var test_id = that.data.test_id;
-        wx.request({ // 发送请求 获取 jwts
-            url: config.host + '/v1/self/tests/' + test_id + '/questions',
+        common.request({ // 发送请求 获取 jwts
+            url: '/v1/self/tests/' + test_id + '/questions',
             header: {
                 Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
             method: "GET",
+            that: that,
             success: function(res) {
                 if (res.statusCode === 200) {
                     res.data.forEach(function(q) {
@@ -40,9 +41,6 @@ Page({
                         duration: 2000
                     });
                 }
-            },
-            fail: function(res) {
-                console.log('获取列表失败');
             }
         })
     },

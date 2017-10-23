@@ -1,4 +1,5 @@
 // update.js
+var app = getApp();
 var config = require('../../../config.js');
 var common = require('../../../common.js');
 var upload = require('../../../utils/upload.js');
@@ -90,7 +91,6 @@ Page({
     },
     formSubmit: function(e) {
         var that = this;
-        console.log('form发生了submit事件，携带数据为：', e.detail.value)
         var form_data = e.detail.value;
         var params = {
             'title': form_data.title,
@@ -100,14 +100,14 @@ Page({
             'start_time': form_data.start_date + ' ' + form_data.start_time,
             'end_time': form_data.end_date + ' ' + form_data.end_time
         };
-        console.log('form发生了submit事件，表单数据为：', params);
-        wx.request({ // 发送请求 获取 jwts
-            url: config.host + '/v1/self/tests/' + that.data.test_id,
+        common.request({ // 发送请求 获取 jwts
+            url: '/v1/self/tests/' + that.data.test_id,
             header: {
                 Authorization: 'JWT' + ' ' + that.data.jwt.access_token
             },
             data: params,
             method: "PUT",
+            that: that,
             success: function(res) {
                 if (res.statusCode === 200) {
                     // 得到 jwt 后存储到 storage，
@@ -145,7 +145,6 @@ Page({
 
                     // 获取文件路径
                     var file = res.tempFiles[0];
-                    console.log(file.size);
 
                     // 获取文件名
                     var fileName = file.path.match(/(wxfile:\/\/)(.+)/)
@@ -162,39 +161,28 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        var that = this,
-            jwt = {};
-        try {
-            var jwt = wx.getStorageSync('jwt')
-            console.log(jwt);
-            if (jwt) {
-                that.setData({
-                    jwt: jwt
-                })
-            }
-        } catch (e) {
-            common.login(that)
-        }
+        var that = this;
         that.setData({
             title: options.title,
             test_id: options.test_id
         });
-        that.get_test_detail(options.test_id);
+        app.checkLogin(that.get_test_detail);
         wx.setNavigationBarTitle({
             title: '随你选测试'
         });
     },
 
-    get_test_detail: function(test_id) {
+    get_test_detail: function() {
         var that = this;
-        wx.request({ // 发送请求 获取 jwts
-            url: config.host + '/v1/self/tests/' + test_id,
+        var test_id = that.data.test_id;
+        common.request({ // 发送请求 获取 jwts
+            url: '/v1/self/tests/' + test_id,
             header: {
-                Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+                Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
             method: "GET",
+            that: this,
             success: function(res) {
-                console.log(res.data)
                 if (res.statusCode === 200) {
                     var start_time_picker = that.data.start_time_picker;
                     var end_time_picker = that.data.end_time_picker;
@@ -202,11 +190,16 @@ Page({
                     end_time_picker.date_value = res.data.date_end;
                     start_time_picker.time_value = res.data.time_start;
                     start_time_picker.date_value = res.data.date_start;
+                    if (res.data.image) {
+                        var files = [res.data.image]
+                    } else {
+                        var files = []
+                    }
                     that.setData({
                         test: res.data,
-                        files: [res.data.image],
+                        files: files,
                         time_pickers: [start_time_picker, end_time_picker]
-                    })
+                    });
                 } else {
                     // 提示错误信息
                     wx.showToast({
@@ -215,9 +208,6 @@ Page({
                         duration: 2000
                     });
                 }
-            },
-            fail: function(res) {
-                console.log('添加测试失败');
             }
         })
     },

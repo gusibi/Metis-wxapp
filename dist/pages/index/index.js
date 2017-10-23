@@ -11,7 +11,6 @@ Page({
         interval: 5000,
         duration: 1000,
         handpicks: [],
-        jwt: {},
     },
     //事件处理函数
     onLoad: function() {
@@ -32,15 +31,13 @@ Page({
     },
     get_test_handpicks: function() {
         var that = this;
-        console.log(app.globalData)
-        console.log(app.globalData.jwt)
         common.request({
             url: '/v1/tests/handpick',
             header: {
                 Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
             method: "GET",
-            that: this,
+            that: that,
             success: function(res) {
                 wx.hideLoading()
                 that.setData({

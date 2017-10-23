@@ -22,7 +22,7 @@
                 </radio-group>
             </view>
             <view class="weui-flex metis-panel">
-                <view class="weui-flex__item" wx:if="{{step > 0}}"><button class="weui-btn metis-btn-sp-area" type="default" bindtap="showTopTips">上一题</button></view>
+                <view class="weui-flex__item" wx:if="{{step > 0}}"><button class="weui-btn metis-btn-sp-area" type="default" bindtap="prePage">上一题</button></view>
                 <view class="weui-flex__item" wx:if="{{ step < questions.length-1 }}"><button class="weui-btn metis-btn-sp-area" type="primary" bindtap="submit">下一题</button></view>
                 <view class="weui-flex__item" wx:else><button class="weui-btn metis-btn-sp-area" type="primary" bindtap="submit">提交答案</button></view>
             </view>

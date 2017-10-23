@@ -1,4 +1,5 @@
 // test.js
+var app = getApp();
 var config = require('../../../config.js');
 var common = require('../../../common.js');
 var util = require('../../../utils/util.js');
@@ -16,34 +17,24 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        var that = this,
-            jwt = {};
-        try {
-            var jwt = wx.getStorageSync('jwt')
-            if (jwt) {
-                that.setData({
-                    jwt: jwt
-                })
-            }
-        } catch (e) {
-            common.login(that)
-        }
+        var that = this;
         that.setData({
             title: options.title,
             test_id: options.test_id
         });
-        that.get_test_detail(options.test_id);
+        app.checkLogin(that.get_test_detail);
         wx.setNavigationBarTitle({
             title: '随你选测试'
         });
     },
 
-    get_test_detail: function(test_id) {
-        var that = this;
+    get_test_detail: function() {
+        var that = this,
+            test_id = this.data.test_id;
         common.request({ // 发送请求 获取 jwts
             url: '/v1/tests/' + test_id,
             header: {
-                Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+                Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
             method: "GET",
             that: that,

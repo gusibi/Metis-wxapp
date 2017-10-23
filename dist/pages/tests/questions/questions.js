@@ -1,3 +1,4 @@
+var app = getApp();
 var config = require('../../../config.js');
 var common = require('../../../common.js');
 var util = require('../../../utils/util.js');
@@ -8,15 +9,13 @@ Page({
         checked_value: null,
         test_id: null,
         step: 0,
-        jwt: {},
         questions: []
     },
     onLoad: function(options) {
         var step = Number(options.step) || 0,
             test_id = options.test_id,
             title = options.title,
-            that = this,
-            jwt = {};
+            that = this;
         if (!test_id) {
             that.showTopTips('测试不存在！')
         } else {
@@ -26,26 +25,16 @@ Page({
                 step: step
             })
         };
-        try {
-            var jwt = wx.getStorageSync('jwt')
-            if (jwt) {
-                that.setData({
-                    jwt: jwt
-                })
-            } else {
-                common.login(that)
-            }
-        } catch (e) {
-            common.login(that)
-        }
-        this.get_test_questions(test_id, step);
+        app.checkLogin(this.get_test_questions);
     },
-    get_test_questions: function(test_id, step) {
-        var that = this;
+    get_test_questions: function() {
+        var that = this,
+            test_id = this.data.test_id,
+            step = this.data.step;
         common.request({ // 发送请求 获取 jwts
             url: '/v1/tests/' + test_id + '/questions',
             header: {
-                Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+                Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
             method: "GET",
             that: that,
@@ -78,11 +67,18 @@ Page({
             });
         }, 3000);
     },
+    prePage: function() {
+        var that = this;
+        var url = "/pages/tests/questions/questions?test_id=" + that.data.test_id + "&title=" + that.data.title + "&step=" + (Number(that.data.step) - 1);
+        wx.redirectTo({
+            url: url,
+        })
+    },
     submit_answers: function(that) {
         common.request({ // 发送请求 获取 jwt
             url: '/v1/tests/' + that.data.test_id + '/answers',
             header: {
-                Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+                Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
             data: {
                 question_id: that.data.question.id,

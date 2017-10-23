@@ -27,7 +27,7 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__bd" hidden="true">
-                        <input class="weui-input" name="image" value="{{files[0]}}" placeholder="请输入题目"/>
+                        <input class="weui-input" name="image" value="{{files[0]}}" placeholder="请输入题目" />
                     </view>
                     <view class="weui-uploader__files" id="uploaderFiles">
                         <block wx:for="{{files}}" wx:key="*this" wx:for-index="idx">
@@ -36,7 +36,7 @@
                             </view>
                         </block>
                         <view class="weui-uploader__file weui-uploader__file_status" wx:if="{{files.length <1 }}">
-                            <image class="weui-uploader__img" src="../../style/images/pic_160.png" mode="aspectFill" />
+                            <image class="weui-uploader__img" src="../../../style/images/pic_160.png" mode="aspectFill" />
                             <view class="weui-uploader__file-content" wx:if="{{upload_fail}}">
                                 <icon type="warn" size="23" color="#F43530"></icon>
                             </view>
