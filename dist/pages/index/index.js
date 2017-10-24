@@ -11,10 +11,12 @@ Page({
         interval: 5000,
         duration: 1000,
         handpicks: [],
+        banner_tests: [],
     },
     //事件处理函数
     onLoad: function() {
         var that = this;
+        app.checkLogin(that.get_test_banner);
         app.checkLogin(that.get_test_handpicks);
         // this.onPullDownRefresh()
     },
@@ -26,8 +28,26 @@ Page({
         wx.showLoading({
             title: "加载中",
         })
+        that.get_test_banner();
         that.get_test_handpicks();
         wx.stopPullDownRefresh();
+    },
+    get_test_banner: function() {
+        var that = this;
+        common.request({
+            url: '/v1/tests/banner',
+            header: {
+                Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
+            },
+            method: "GET",
+            that: that,
+            success: function(res) {
+                wx.hideLoading()
+                that.setData({
+                    banner_tests: res.data
+                })
+            }
+        })
     },
     get_test_handpicks: function() {
         var that = this;

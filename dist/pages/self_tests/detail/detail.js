@@ -20,7 +20,6 @@ Page({
         var that = this;
         app.checkLogin();
         that.setData({
-            title: options.title,
             test_id: options.test_id
         });
         that.get_test_detail(options.test_id);
@@ -58,12 +57,11 @@ Page({
     publishTest: function() {
         var that = this;
         common.request({ // 发送请求 获取 jwts
-            url: '/v1/self/tests/' + that.data.test_id,
+            url: '/v1/self/tests/' + that.data.test_id + '/publish',
             header: {
                 Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
             method: "PUT",
-            data: { status: 'published' },
             that: that,
             success: function(res) {
                 if (res.statusCode === 200) {
@@ -84,12 +82,11 @@ Page({
     cancelPublishTest: function() {
         var that = this;
         common.request({ // 发送请求 获取 jwts
-            url: '/v1/self/tests/' + that.data.test_id,
+            url: '/v1/self/tests/' + that.data.test_id + '/publish',
             header: {
                 Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
-            method: "PUT",
-            data: { status: 'draft' },
+            method: "DELETE",
             that: that,
             success: function(res) {
                 if (res.statusCode === 200) {
@@ -110,7 +107,7 @@ Page({
     updateTest: function() {
         var that = this;
         wx.redirectTo({
-            url: '/pages/self_tests/update/update?test_id=' + that.data.test_id + '&title=' + that.data.test_title,
+            url: '/pages/self_tests/update/update?test_id=' + that.data.test_id + '&title=' + that.data.test.title,
         });
     },
     deleteTest: function() {
@@ -140,7 +137,7 @@ Page({
     },
     redirectToQuestions: function() {
         var that = this;
-        var url = "/pages/self_tests/questions/questions?test_id=" + that.data.test_id + "&title=" + that.data.test_title;
+        var url = "/pages/self_tests/questions/questions?test_id=" + that.data.test_id + "&title=" + that.data.test.title;
         wx.redirectTo({
             url: url,
             success: function(res) {

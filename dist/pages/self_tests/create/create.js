@@ -139,13 +139,14 @@ Page({
         // 选择上传的图片
         wx.chooseImage({
                 success: function(res) {
+                    console.log(res)
 
                     // 获取文件路径
                     var file = res.tempFiles[0];
-                    console.log(file.size);
 
                     // 获取文件名
-                    var fileName = file.path.match(/(wxfile:\/\/)(.+)/)
+                    //var fileName = file.path.match(/(wxfile:\/\/)(.+)/)
+                    var fileName = file.path.match(/(http:\/\/|wxfile:\/\/)(.+)/)
                     fileName = fileName[2]
 
                     // 文件上传cos

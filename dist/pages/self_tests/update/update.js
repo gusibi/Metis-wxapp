@@ -103,7 +103,7 @@ Page({
         common.request({ // 发送请求 获取 jwts
             url: '/v1/self/tests/' + that.data.test_id,
             header: {
-                Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+                Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
             },
             data: params,
             method: "PUT",
@@ -142,12 +142,11 @@ Page({
         wx.chooseImage({
                 sizeType: ['original', 'compressed'],
                 success: function(res) {
-
                     // 获取文件路径
                     var file = res.tempFiles[0];
 
                     // 获取文件名
-                    var fileName = file.path.match(/(wxfile:\/\/)(.+)/)
+                    var fileName = file.path.match(/(http:\/\/|wxfile:\/\/)(.+)/)
                     fileName = fileName[2]
 
                     // 文件上传cos

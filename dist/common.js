@@ -60,7 +60,6 @@ var login = function(option) {
                     // success
                     var encryptedData = res.encryptedData || 'encry';
                     var iv = res.iv || 'iv';
-                    console.log(config.basic_token);
                     wx.request({ // 发送请求 获取 jwt
                         url: config.host + '/auth/oauth/token?code=' + code,
                         header: {
@@ -81,7 +80,6 @@ var login = function(option) {
                                     icon: 'success'
                                 });
                                 app.globalData.jwt = res.data
-                                console.log(app.globalData)
                                 option && option();
                             } else if (res.statusCode === 401) {
                                 // 如果没有注册调用注册接口

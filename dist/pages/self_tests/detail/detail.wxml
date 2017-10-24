@@ -18,7 +18,7 @@
         </view>
     </view>
     <view class="button-sp-area">
-        <button class="weui-btn mini-btn" size="mini" type="primary" wx:if="{{test.status == 'draft'}}" bindtap="publishTest">发布</button>
+        <button class="weui-btn mini-btn" size="mini" type="primary" wx:if="{{test.status == 'draft' || test.status == 'withdraw'}}" bindtap="publishTest">发布</button>
         <button class="weui-btn mini-btn" size="mini" type="primary" wx:if="{{test.status == 'published'}}" bindtap="cancelPublishTest">取消发布</button>
         <button class="weui-btn mini-btn" size="mini" type="default" bindtap="updateTest">修改</button>
         <button class="weui-btn mini-btn" size="mini" type="warn" type="warn" bindtap="deleteTest">删除</button>

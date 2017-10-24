@@ -20,14 +20,14 @@ var cosSignatureUrl = config.host + '/v1/qc_cos/config?cos_path=' + config.cos_d
  */
 function upload(filePath, fileName, that) {
     var data;
-
-    // 鉴权获取签名
+    var app = getApp()
+        // 鉴权获取签名
     wx.request({
         url: cosSignatureUrl,
         header: {
-            Authorization: 'JWT' + ' ' + that.data.jwt.access_token
+            Authorization: 'JWT' + ' ' + app.globalData.jwt.access_token
         },
-        success: function (cosRes) {
+        success: function(cosRes) {
 
             // 签名
             var signature = cosRes.data.sign;
@@ -43,7 +43,7 @@ function upload(filePath, fileName, that) {
                 formData: {
                     op: 'upload'
                 },
-                success: function (uploadRes) {
+                success: function(uploadRes) {
                     var upload_res = JSON.parse(uploadRes.data)
                     var files = that.data.files;
                     files.push(upload_res.data.source_url);
@@ -53,7 +53,7 @@ function upload(filePath, fileName, that) {
                         test_image: upload_res.data.source_url
                     })
                 },
-                fail: function (e) {
+                fail: function(e) {
                     console.log('e', e)
                 }
             });
@@ -61,7 +61,7 @@ function upload(filePath, fileName, that) {
                 that.setData({
                     upload_progress: res.progress
                 })
-                if (res.progress === 100){
+                if (res.progress === 100) {
                     that.setData({
                         upload_progress: 0
                     })
