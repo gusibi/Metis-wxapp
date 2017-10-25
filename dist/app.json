@@ -10,7 +10,8 @@
         "pages/self_questions/create",
         "pages/tests/answered/answered",
         "pages/tests/index/preview",
-        "pages/tests/questions/questions"
+        "pages/tests/questions/questions",
+        "pages/self_testing/list"
     ],
     "window": {
         "enablePullDownRefresh": true,

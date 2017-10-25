@@ -17,7 +17,7 @@ Page({
             {
                 icon: '../../assets/images/iconfont-addr.png',
                 text: '我参与的测试',
-                path: '/pages/self_tests/list/list'
+                path: '/pages/self_testing/list'
             },
         ],
         jwt: {},
